@@ -1,7 +1,7 @@
 var chars;
 var ctx;
 var kanjiArr=[];
-var freq = 100;
+var freq = 10;
 
 function preload() {
     chars = loadImage("chars.png");
@@ -26,17 +26,29 @@ function setup(){
 
 function draw(){
   background(0);
+  if (kanjiArr.length<10){
   kanjiArr.push(new Kanji());
-  var len = kanjiArr.length;
-  if (len>0){
-    for (var i = len-1; i >= 0; i--) {
+  //console.log('new');
+  }
+  //var len = kanjiArr.length;
+  if (kanjiArr.length>0){
+    for (var i =  kanjiArr.length-1; i >= 0; i--) {
       //if(kanjiArr[i]!=null){
         kanjiArr[i].render();
         kanjiArr[i].tick();
+        console.log(kanjiArr.length);
       //}
-      if (!kanjiArr[i].valid){
-            kanjiArr.splice(i, 1);
-          }
+        if (!kanjiArr[i].valid){2
+          // if (kanjiArr.length<10){
+          kanjiArr.push(new Kanji(kanjiArr[i].pos));
+          console.log('new');
+          //}
+          kanjiArr.splice(i, 1);
+        }
+        if (kanjiArr[i].pos.y>height){
+          kanjiArr.splice(i, 1);
+          kanjiArr.push(new Kanji());
+        }
     }
   
   }
