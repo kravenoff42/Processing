@@ -50,6 +50,7 @@ function Spec(pos,dna){
     this.mutability = this.dna[2];
     this.health = this.dna[3]
     this.social = 3;
+    this.neighbors = [];
     
     this.render = function(){
         push();
@@ -69,10 +70,7 @@ function Spec(pos,dna){
     }
     
     this.die = function(index){
-        var prob = this.health;
-        if(random()>prob ||this.pos.y<0 || this.pos.x<0 || this.pos.y>height || this.pos.y>width ){
-            swarm.arr.splice(index,1);
-        }
+        swarm.arr.splice(index,1);
     }
     
     this.findMate = function(){
@@ -83,6 +81,11 @@ function Spec(pos,dna){
                 this.mate = swarm.arr[i].dna;
             }
         }
+    }
+    
+    this.getNeighbors = function(){
+        this.neighbors = [];
+        this.neighbors = window.swarm.findNeighbors(this.pos);
     }
     
 }
