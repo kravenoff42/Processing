@@ -40,14 +40,14 @@ function Swarm(size){
     }
     
     this.weakGenes = function(spec){
-        if(spec.pos.y<0 || spec.pos.x<0 || spec.pos.y>height || spec.pos.y>width){
+        if(random()>spec.health){
             return true;
         }else{
             return false;
         }
     }
     this.crowded = function(spec){
-        if(spec.pos.y<0 || spec.pos.x<0 || spec.pos.y>height || spec.pos.y>width){
+        if(spec.neighbors>spec.social){
             return true;
         }else{
             return false;

@@ -49,6 +49,7 @@ function Spec(pos,dna){
     this.fertility = this.dna[1];
     this.mutability = this.dna[2];
     this.health = this.dna[3]
+    this.social = 3;
     
     this.render = function(){
         push();
