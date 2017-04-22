@@ -6,6 +6,7 @@ var btnNew;
 var btnReload;
 var wrapper;
 var running;
+var count;
 var BASE_NUM = 16;
 var SWARM_SIZE = 6;
 var DNA_SIZE = 4;
@@ -30,18 +31,21 @@ function setup(){
   btnNew.addEventListener('click',function(){ swarm.arr.push(new Spec()); });
   btnReload.addEventListener('click',function() { location.reload(); });
   
-  frameRate(3);
+  //frameRate(3);
+  count = 0;
   swarm = new Swarm(SWARM_SIZE);
 }
 
 function draw(){
   background(90);
   swarm.show();
-  
-  if(swarm.arr.length>0 && running){
-    cycle();
+  if(count==30){
+    if(swarm.arr.length>0 && running){
+      cycle();
+    }
+    count = 0;
   }
-  
+  count++;
 }
 
 function rt(x){

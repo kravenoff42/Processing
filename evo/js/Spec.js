@@ -37,7 +37,13 @@ function Spec(pos,dna,mut){
                 this.dna[i]= dna[i];
             }
         }
-        
+        var addDrop = random();
+        if(addDrop<0.001){
+            this.dna.splice(FtoCust(random(),this.dna.length),1);
+        }
+        if(addDrop>0.999){
+            this.dna.splice(FtoCust(random(),this.dna.length),0,random());
+        }
         //console.log(this.dna);
     }else {
         this.dna = []
