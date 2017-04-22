@@ -1,8 +1,8 @@
-function Spec(pos,dna){
+function Spec(pos,dna,mut){
     //if spec is given a Position , then it has a parent, so alter position slightly
     if (pos!=null){
         //make new offset vector
-        var newPos = createVector(floor(random(-30,30)),floor(random(-30,30)));
+        var newPos = createVector(plusMinus(floor(random(10,30))),plusMinus(floor(random(10,30))));
         //add to older vector
         newPos.add(pos);
         //set new position
@@ -21,7 +21,7 @@ function Spec(pos,dna){
         var len = dna.length;
         for(var i = len-1; i>=0; i--){
             //set mutability
-            var prob = this.mutability;
+            var prob = mut;
             //if a randow number is less the prob then mutate
             if(random()<prob){
                 //get new value/10 (to make change subtle)
@@ -31,20 +31,22 @@ function Spec(pos,dna){
                 //keep value between 0 and 1
                 temp = keep0to1(temp);
                 //console.log('temp for ',i,': ',temp);
-                this.dna.push(temp); 
+                this.dna[i] = temp; 
             }else{
                 //otherwise just copy gene
-                this.dna.push(dna[i]);
+                this.dna[i]= dna[i];
             }
         }
         
-        console.log(this.dna);
+        //console.log(this.dna);
     }else {
         this.dna = []
         for(var i = 0; i<DNA_SIZE; i++){
             this.dna.push(random());
         } 
     }
+    
+    this.radius = 5;
     this.mate = [];
     this.fertility = this.dna[1];
     this.mutability = this.dna[2];
@@ -57,15 +59,30 @@ function Spec(pos,dna){
         colorMode(HSB);
         fill(Fto360(this.dna[0]),360,180);
         // fill(Fto255(this.dna));
-        ellipse(this.pos.x,this.pos.y,10,10);
+        ellipse(this.pos.x,this.pos.y,this.radius*2,this.radius*2);
         pop();
     }
     
     this.reproduce = function(){
+        //find a mate
         this.mate = this.findMate();
+        // console.log(this.mate);
         var prob = this.fertility;
+        var mateDNA = this.mate;
+        var selfDNA = this.dna;
+        var newDNA = [];
+        //if fertility is higher enough reproduce
         if(random()<prob){
-            swarm.arr.push( new Spec(this.pos,this.dna));
+            //build new dna from parents
+            var len = selfDNA.length;
+            for(var i = len-1; i>=0; i--){
+                if(coinFlip()){
+                    newDNA[i] = selfDNA[i];
+                }else{
+                    newDNA[i] = mateDNA[i];
+                }
+            }
+            swarm.arr.push( new Spec(this.pos, newDNA, this.mutability));
         }
     }
     
@@ -75,17 +92,18 @@ function Spec(pos,dna){
     
     this.findMate = function(){
         var min = this.fertility;
+        // console.log(min);
         var len = swarm.arr.length;
         for (var i = len-1; i>=0;i--){
             if (swarm.arr[i].fertility>=min){
-                this.mate = swarm.arr[i].dna;
+                return swarm.arr[i].dna;
             }
         }
     }
     
     this.getNeighbors = function(){
         this.neighbors = [];
-        this.neighbors = window.swarm.findNeighbors(this.pos);
+        this.neighbors = swarm.findNeighbors(this.pos);
     }
     
 }

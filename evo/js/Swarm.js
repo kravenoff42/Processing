@@ -18,7 +18,9 @@ function Swarm(size){
         var len = this.arr.length;
         for (var i = len-1; i>=0; i--){
             var thisSpec = this.arr[i];
-            if(this.outOfBounds(thisSpec) || this.weakGenes(thisSpec) || this.crowded(thisSpec)){
+            //console.log(thisSpec);
+            thisSpec.getNeighbors();
+            if(this.crowded(thisSpec) || this.outOfBounds(thisSpec) || this.weakGenes(thisSpec)){
                 thisSpec.die(i);
             }
         }
@@ -47,7 +49,9 @@ function Swarm(size){
         }
     }
     this.crowded = function(spec){
+        // console.log(spec.neighbors.length);
         if(spec.neighbors.length>spec.social){
+            // console.log('killed ',spec.pos.x,', ',spec.pos.y);
             return true;
         }else{
             return false;
@@ -59,13 +63,13 @@ function Swarm(size){
         var neighbors = [];
         for(var i = len-1;i>=0;i--){
             var currSpec = this.arr[i];
-            var searchArea = 10;
-            var d = dist(specPos.x,specPos.y,currSpec.pos.x, currSpec.pos.y);
-            if(d < searchArea){
+            var searchArea = 30;
+            var d = currSpec.pos.dist(specPos);
+            if(d <= searchArea){
                 neighbors.push(i);
             }
         }
-        console.log(neighbors);
+        //console.log(neighbors);
         return neighbors;
     }
 }

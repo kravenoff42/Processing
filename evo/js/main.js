@@ -1,6 +1,11 @@
 var swarm; 
-var btnBreed;
-var btnKill;
+var btnStart;
+var btnStop;
+var btnStep;
+var btnNew;
+var btnReload;
+var wrapper;
+var running;
 var BASE_NUM = 16;
 var SWARM_SIZE = 6;
 var DNA_SIZE = 4;
@@ -8,13 +13,23 @@ var DNA_SIZE = 4;
 var blobs = [];
 
 function setup(){
-  // btnBreed = createButton('Breed');
-  // btnBreed.position(10, 10);
-  // btnBreed.mousePressed(brd);
-  // btnBreed = createButton('Kill');
-  // btnBreed.position(width-10, 10);
-  // btnBreed.mousePressed(kl);
-  createCanvas(900,800);
+  wrapper = document.getElementById('wrapper');
+  btnStart = document.getElementById('btnStart');
+  btnStop = document.getElementById('btnStop');
+  btnStep = document.getElementById('btnStep');
+  btnNew = document.getElementById('btnNew');
+  btnReload = document.getElementById('btnReload');
+  running = false;
+  var canvas = createCanvas(900,800);
+  canvas.parent(wrapper);
+  
+  
+  btnStart.addEventListener('click',function(){window.running = true});
+  btnStop.addEventListener('click',function(){window.running = false});
+  btnStep.addEventListener('click',cycle);
+  btnNew.addEventListener('click',function(){ swarm.arr.push(new Spec()); });
+  btnReload.addEventListener('click',function() { location.reload(); });
+  
   frameRate(3);
   swarm = new Swarm(SWARM_SIZE);
 }
@@ -22,9 +37,9 @@ function setup(){
 function draw(){
   background(90);
   swarm.show();
-  if(swarm.arr.length>0){
-  swarm.breed();
-  swarm.cull();
+  
+  if(swarm.arr.length>0 && running){
+    cycle();
   }
   
 }
@@ -51,4 +66,9 @@ function keep0to1(x){
       x++;
   }
   return x;
+}
+
+function cycle(){
+  swarm.breed();
+  swarm.cull();
 }
