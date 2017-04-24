@@ -33,11 +33,29 @@ function shuffleCut(arr){
     return halfArr;
 }
 
+function combineTwo(arr1,arr2){
+    var newArr = [];
+    var len;
+    if (arr1.length>arr2.length){
+        len = arr1.length;
+    }else{
+        len = arr2.length;
+    }
+    for(var i = len-1; i>=0; i--){
+        if(coinFlip() && arr1[i]){
+            newArr[i] = arr1[i];
+        }else if(arr2[i]){
+            newArr[i] = arr2[i];
+        }
+    }
+    return newArr;
+}
+
 function shuffleTwo(arr1,arr2){
     var newArr = arr1.concat(arr2);
     var j, x, i;
     var len = newArr.length;
-    for (i = len; i; i--) {
+    for (i = len; i>=0; i--) {
         j = Math.floor(Math.random() * i);
         x = newArr[i - 1];
         newArr[i - 1] = newArr[j];
@@ -49,7 +67,7 @@ function shuffleTwo(arr1,arr2){
 function shuffle(arr) {
     var j, x, i;
     var len = arr.length;
-    for (i = len; i; i--) {
+    for (i = len; i>=0; i--) {
         j = Math.floor(Math.random() * i);
         x = arr[i - 1];
         arr[i - 1] = arr[j];

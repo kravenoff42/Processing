@@ -15,7 +15,7 @@ function Spec(pos,dna,mut){
     }
     //if dna array is given, then spec has parent, use, parent dna to build new dna array
     if(dna!=null){
-        //declar array
+        //declare array
         this.dna = [];
         //grab length
         var len = dna.length;
@@ -52,6 +52,7 @@ function Spec(pos,dna,mut){
         } 
     }
     
+    this.heading = createVector(0,0);
     this.radius = 5;
     this.mate = [];
     this.fertility = this.dna[1];
@@ -80,14 +81,7 @@ function Spec(pos,dna,mut){
         //if fertility is higher enough reproduce
         if(random()<prob){
             //build new dna from parents
-            var len = selfDNA.length;
-            for(var i = len-1; i>=0; i--){
-                if(coinFlip()){
-                    newDNA[i] = selfDNA[i];
-                }else{
-                    newDNA[i] = mateDNA[i];
-                }
-            }
+            newDNA = combineTwo(selfDNA,mateDNA);//probablility.js
             swarm.arr.push( new Spec(this.pos, newDNA, this.mutability));
         }
     }
@@ -110,6 +104,10 @@ function Spec(pos,dna,mut){
     this.getNeighbors = function(){
         this.neighbors = [];
         this.neighbors = swarm.findNeighbors(this.pos);
+    }
+    
+    this.walk = function(){
+        
     }
     
 }
