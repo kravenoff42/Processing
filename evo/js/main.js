@@ -72,6 +72,16 @@ function keep0to1(x){
   return x;
 }
 
+function keepValidIndex(x, arr){
+  if(x>=arr.length){
+      x=0;
+  }
+  if(x<0){
+      x=arr.length-1;
+  }
+  return x;
+}
+
 function cycle(){
   swarm.breed();
   swarm.cull();

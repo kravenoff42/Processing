@@ -1,4 +1,4 @@
-function Spec(pos,dna,mut){
+function Spec(pos,dna,traits,controllers){
     //if spec is given a Position , then it has a parent, so alter position slightly
     if (pos!=null){
         //make new offset vector
@@ -52,11 +52,50 @@ function Spec(pos,dna,mut){
         } 
     }
     
+    //if traits array is given, then spec has parent, use, parent traits to build new trait array
+    if(traits!=null){
+        //declare array
+        this.traits = [];
+        //grab length
+        var len = traits.length;
+        for(var i = len-1; i>=0; i--){
+            //set mutability
+            var prob = mut;
+            //if a randow number is less the prob then mutate
+            if(random()<prob){
+                //get new value/10 (to make change subtle)
+                var offset = plusMinus(random()/10);
+                //then add/subtract to current value
+                var temp = offset + dna[i];
+                //keep value between 0 and 1
+                temp = keep0to1(temp);
+                //console.log('temp for ',i,': ',temp);
+                this.dna[i] = temp; 
+            }else{
+                //otherwise just copy gene
+                this.dna[i]= dna[i];
+            }
+        }
+        var addDrop = random();
+        if(addDrop<0.001){
+            this.dna.splice(FtoCust(random(),this.dna.length),1);
+        }
+        if(addDrop>0.999){
+            this.dna.splice(FtoCust(random(),this.dna.length),0,random());
+        }
+        //console.log(this.dna);
+    }else {
+        this.dna = []
+        for(var i = 0; i<DNA_SIZE; i++){
+            this.dna.push(random());
+        } 
+    }
+    
     this.heading = createVector(0,0);
     this.radius = 5;
     this.mate = [];
     this.fertility = this.dna[1];
-    this.mutability = this.dna[2];
+    this.mutability = this.dna[2]/10;
     this.health = this.dna[3]
     this.social = 3;
     this.neighbors = [];
@@ -64,9 +103,11 @@ function Spec(pos,dna,mut){
     this.render = function(){
         push();
         colorMode(HSB);
-        fill(Fto360(this.dna[0]),360,180);
-        // fill(Fto255(this.dna));
-        ellipse(this.pos.x,this.pos.y,this.radius*2,this.radius*2);
+        setColor(this.dna);
+        // fill(Fto360(this.dna[0]),360,180);
+        setStroke(this.dna);
+        setShape(this.pos,this.dna);
+        // ellipse(this.pos.x,this.pos.y,this.radius*2,this.radius*2);
         pop();
     }
     

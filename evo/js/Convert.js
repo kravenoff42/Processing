@@ -38,3 +38,6 @@ function FtoCent(x){
     return floor(map(x,0,1,0,10001))/10000;
 }
 
+function randIndex(x,arr){
+    return floor(map(x,0,1,0,arr.length-1));
+}
