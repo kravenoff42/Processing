@@ -1,11 +1,7 @@
 var Traits = {"height":1, "width":1, "weight":1, "topSpeed":1, "shape":{"sides":1,"depths":"sides"}, "hue":1, "sat":1, "bright":1, "walk":1,"eat":1, "steer":3, "learn":1};
 function Trait(name, gene, mutability){
     this.name = name; //string
-    if(mutability!=null){
-        this.mutability = mutability;
-    } else{
-        this.mutability = random();
-    }
+
     if(gene!=null){
         var prob = this.mutability;
         if(random()<prob){
@@ -18,17 +14,28 @@ function Trait(name, gene, mutability){
         this.controlGene = floor(random());
     }
     this.dominance = random(); //used to break ties between similar traits
-    
+
 }
 
-function setColor(dna){
-    
+function setColor(traits){
+  var h = 128;
+  var s = 128;
+  var b = 128;
+    if (triats.hasOwnProperty(hue)){
+      h = traits.hue();
+    }
+    if (triats.hasOwnProperty(sat)){
+      s = traits.sat();
+    }
+    if (triats.hasOwnProperty(bright)){
+      b = traits.bright();
+    }
+    color(h,s,b);
 }
 
 function setShape(pos,dna, control){
     var startGene = control;
     translate(pos.x,pos.y);
-    stroke(255);
     beginShape();
     for(var i = dna.length;i>=0;i--){
       var angle = map(i, 0, 1, 0, TWO_PI);
@@ -43,8 +50,8 @@ function setShape(pos,dna, control){
 }
 
 function setStroke(){
-    stroke()
-    strokeWeight
+    stroke(0);
+    strokeWeight(1);
 }
 /*
 common traits
@@ -74,12 +81,12 @@ smell
 eat
     brethe/photo/herb/carn/omni
 walk
-    
+
 swim
 fly
 hunt
 attack
-    
+
 defend
     passive/active
 remember
