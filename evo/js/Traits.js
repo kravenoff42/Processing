@@ -21,13 +21,13 @@ function setColor(traits){
   var h = 128;
   var s = 128;
   var b = 128;
-    if (triats.hasOwnProperty(hue)){
+    if (traits.hasOwnProperty(hue)){
       h = traits.hue();
     }
-    if (triats.hasOwnProperty(sat)){
+    if (traits.hasOwnProperty(sat)){
       s = traits.sat();
     }
-    if (triats.hasOwnProperty(bright)){
+    if (traits.hasOwnProperty(bright)){
       b = traits.bright();
     }
     color(h,s,b);
