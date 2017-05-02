@@ -1,4 +1,4 @@
-var swarm; 
+var swarm;
 var btnStart;
 var btnStop;
 var btnStep;
@@ -8,8 +8,8 @@ var wrapper;
 var running;
 var count;
 var BASE_NUM = 16;
-var SWARM_SIZE = 6;
-var DNA_SIZE = 4;
+var SWARM_SIZE = 10;
+var DNA_SIZE = 6;
 
 var blobs = [];
 
@@ -23,15 +23,15 @@ function setup(){
   running = false;
   var canvas = createCanvas(900,800);
   canvas.parent(wrapper);
-  
-  
+
+
   btnStart.addEventListener('click',function(){window.running = true});
   btnStop.addEventListener('click',function(){window.running = false});
   btnStep.addEventListener('click',cycle);
   btnNew.addEventListener('click',function(){ swarm.arr.push(new Spec()); });
   btnReload.addEventListener('click',function() { location.reload(); });
-  
-  //frameRate(3);
+
+  // noLoop();
   count = 0;
   swarm = new Swarm(SWARM_SIZE);
 }

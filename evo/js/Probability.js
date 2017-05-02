@@ -41,7 +41,7 @@ function combineTwo(arr1,arr2){
     }else{
         len = arr2.length;
     }
-    for(var i = len-1; i>=0; i--){
+    for(var i = 0; i<len; i++){
         if(coinFlip() && arr1[i]){
             newArr[i] = arr1[i];
         }else if(arr2[i]){
@@ -64,7 +64,7 @@ function shuffleTwo(arr1,arr2){
     return newArr;
 }
 
-function shuffle(arr) {
+function myshuffle(arr) {
     var j, x, i;
     var len = arr.length;
     for (i = len; i>=0; i--) {

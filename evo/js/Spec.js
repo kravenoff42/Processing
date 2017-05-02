@@ -1,4 +1,4 @@
-function Spec(pos,dna,traits,controllers){
+function Spec(pos,dna,mut,traits,controllers){
     //if spec is given a Position , then it has a parent, so alter position slightly
     if (pos!=null){
         //make new offset vector
@@ -31,7 +31,7 @@ function Spec(pos,dna,traits,controllers){
                 //keep value between 0 and 1
                 temp = keep0to1(temp);
                 //console.log('temp for ',i,': ',temp);
-                this.dna[i] = temp; 
+                this.dna[i] = temp;
             }else{
                 //otherwise just copy gene
                 this.dna[i]= dna[i];
@@ -39,19 +39,22 @@ function Spec(pos,dna,traits,controllers){
         }
         var addDrop = random();
         if(addDrop<0.001){
+          // console.log('drop');
             this.dna.splice(FtoCust(random(),this.dna.length),1);
         }
         if(addDrop>0.999){
+          // console.log('add');
             this.dna.splice(FtoCust(random(),this.dna.length),0,random());
         }
-        //console.log(this.dna);
+
+        // console.log(this.dna);
     }else {
         this.dna = []
         for(var i = 0; i<DNA_SIZE; i++){
             this.dna.push(random());
-        } 
+        }
     }
-    
+
     //if traits array is given, then spec has parent, use, parent traits to build new trait array
     if(traits!=null){
         //declare array
@@ -70,27 +73,28 @@ function Spec(pos,dna,traits,controllers){
                 //keep value between 0 and 1
                 temp = keep0to1(temp);
                 //console.log('temp for ',i,': ',temp);
-                this.dna[i] = temp; 
+                this.traits[i] = temp;
             }else{
                 //otherwise just copy gene
-                this.dna[i]= dna[i];
+                this.traits[i]= traits[i];
             }
         }
+        /***********TRAITS****************/
         var addDrop = random();
-        if(addDrop<0.001){
-            this.dna.splice(FtoCust(random(),this.dna.length),1);
+        if(addDrop<0.01){
+            this.traits.splice(FtoCust(random(),this.dna.length),1);
         }
-        if(addDrop>0.999){
-            this.dna.splice(FtoCust(random(),this.dna.length),0,random());
+        if(addDrop>0.99){
+            this.traits.splice(FtoCust(random(),this.dna.length),0,random());
         }
         //console.log(this.dna);
     }else {
-        this.dna = []
+        this.traits = []
         for(var i = 0; i<DNA_SIZE; i++){
-            this.dna.push(random());
-        } 
+            this.traits.push(random());
+        }
     }
-    
+
     this.heading = createVector(0,0);
     this.radius = 5;
     this.mate = [];
@@ -99,18 +103,21 @@ function Spec(pos,dna,traits,controllers){
     this.health = this.dna[3]
     this.social = 3;
     this.neighbors = [];
-    
+
     this.render = function(){
         push();
         colorMode(HSB);
         setColor(this.dna);
+        // console.log('color');
         // fill(Fto360(this.dna[0]),360,180);
         setStroke(this.dna);
-        setShape(this.pos,this.dna);
+        // console.log('stroke');
+        setShape(this.pos,this.dna,0);
+        // console.log('shape');
         // ellipse(this.pos.x,this.pos.y,this.radius*2,this.radius*2);
         pop();
     }
-    
+
     this.reproduce = function(){
         //find a mate
         this.mate = this.findMate();
@@ -122,15 +129,18 @@ function Spec(pos,dna,traits,controllers){
         //if fertility is higher enough reproduce
         if(random()<prob){
             //build new dna from parents
+            // console.log('self',selfDNA);
+            // console.log('mate',mateDNA);
             newDNA = combineTwo(selfDNA,mateDNA);//probablility.js
+            // console.log('new',newDNA);
             swarm.arr.push( new Spec(this.pos, newDNA, this.mutability));
         }
     }
-    
+
     this.die = function(index){
         swarm.arr.splice(index,1);
     }
-    
+
     this.findMate = function(){
         var min = this.fertility;
         // console.log(min);
@@ -141,16 +151,16 @@ function Spec(pos,dna,traits,controllers){
             }
         }
     }
-    
+
     this.getNeighbors = function(){
         this.neighbors = [];
         this.neighbors = swarm.findNeighbors(this.pos);
     }
-    
+
     this.walk = function(){
-        
+
     }
-    
+
 }
 
 // function Spec(pos, len, dna, mutability){
@@ -195,31 +205,31 @@ function Spec(pos,dna,traits,controllers){
 //             }
 //         }
 //     // }
-    
+
 //     this.mate;
 //     this.traits = [];
 //     this.health;
 //     this.fitness;
 //     this.age;
-    
+
 //     this.getTrait = function(newTrait){
 //         this.traits.push(new Trait.arr)
 //     }
-    
+
 //     this.reproduce = function(){
 //         var newPos = createVector(floor(random(-30,30)),floor(random(-30,30)));
 //         newPos.add(this.pos);
 //         swarm.arr.push(new Spec(newPos,this.dna_len,this.dna,this.mutability));
 //     }
-    
+
 //     this.getOlder = function(){
-        
+
 //     }
-    
+
 //     this.eat = function(){
-        
+
 //     }
-    
+
 //     this.render = function(){
 //         push();
 //         colorMode(HSB);
@@ -227,5 +237,5 @@ function Spec(pos,dna,traits,controllers){
 //         ellipse(this.pos.x,this.pos.y,10,10);
 //         pop();
 //     }
-    
+
 // }

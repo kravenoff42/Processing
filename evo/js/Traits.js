@@ -21,31 +21,33 @@ function setColor(traits){
   var h = 128;
   var s = 128;
   var b = 128;
-    if (traits.hasOwnProperty(hue)){
-      h = traits.hue();
-    }
-    if (traits.hasOwnProperty(sat)){
-      s = traits.sat();
-    }
-    if (traits.hasOwnProperty(bright)){
-      b = traits.bright();
-    }
-    color(h,s,b);
+    // if (traits.hasOwnProperty(hue)){
+    //   h = traits.hue();
+    // }
+    // if (traits.hasOwnProperty(sat)){
+    //   s = traits.sat();
+    // }
+    // if (traits.hasOwnProperty(bright)){
+    //   b = traits.bright();
+    // }
+    fill(h,s,b);
 }
 
 function setShape(pos,dna, control){
-    var startGene = control;
-    translate(pos.x,pos.y);
-    beginShape();
-    for(var i = dna.length;i>=0;i--){
-      var angle = map(i, 0, 1, 0, TWO_PI);
-      var r = dna[i];
-      var x = r * cos(angle);
-      var y = r * sin(angle);
+  var shapeLen = dna.length - control;
+  var shapeArr = dna.slice(control,shapeLen)
 
-      vertex(x,y);
-    }
-    endShape(CLOSE);
+  translate(pos.x,pos.y);
+  beginShape();
+  for(var i = 0;i<shapeLen;i++){
+    var angle = map(i, 0, shapeLen, 0, TWO_PI);
+    var r = map(shapeArr[i],0,1,1,30);
+    var x = r * cos(angle);
+    var y = r * sin(angle);
+
+    vertex(x,y);
+  }
+  endShape(CLOSE);
 
 }
 
