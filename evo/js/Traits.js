@@ -1,4 +1,7 @@
-var Traits = {"height":1, "width":1, "weight":1, "topSpeed":1, "shape":{"sides":1,"depths":"sides"}, "hue":1, "sat":1, "bright":1, "walk":1,"eat":1, "steer":3, "learn":1};
+var Traits = {"height":1, "width":1, "weight":1, "topSpeed":1,
+ "shape":{"sides":1,"depths":"sides"},
+ "hue":1, "sat":1, "bright":1, "walk":1,"eat":1, "steer":3, "learn":1};
+
 function Trait(name, gene, mutability){
     this.name = name; //string
 
@@ -17,7 +20,7 @@ function Trait(name, gene, mutability){
 
 }
 
-function setColor(traits){
+function setColor(){
   var h = 128;
   var s = 128;
   var b = 128;

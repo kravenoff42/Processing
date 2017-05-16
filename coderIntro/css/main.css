@@ -1,0 +1,30 @@
+#titleAni {
+  margin-top: 0;
+  margin-bottom: 50px;
+}
+#entered {
+  margin: 0;
+}
+header{
+  font-family: 'Roboto Mono', monospace;
+  color: #FFF;
+  background-color: #000;
+  height: 10em;
+  position: relative;
+}
+#titleWrap{
+  position: absolute;
+  bottom: -30px;
+  display: inline-block;
+  width: 60vw;
+  margin-top: 0;
+  padding: 0;
+}
+.hide{
+  display: none;
+}
+.titlePad{
+  display: inline-block;
+  height: 100%;
+  width: 20vw;
+}

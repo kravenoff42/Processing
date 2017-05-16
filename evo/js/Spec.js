@@ -38,11 +38,11 @@ function Spec(pos,dna,mut,traits,controllers){
             }
         }
         var addDrop = random();
-        if(addDrop<0.001){
+        if(addDrop<0.01){
           // console.log('drop');
             this.dna.splice(FtoCust(random(),this.dna.length),1);
         }
-        if(addDrop>0.999){
+        if(addDrop>0.99){
           // console.log('add');
             this.dna.splice(FtoCust(random(),this.dna.length),0,random());
         }

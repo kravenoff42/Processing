@@ -9,7 +9,7 @@ var running;
 var count;
 var BASE_NUM = 16;
 var SWARM_SIZE = 10;
-var DNA_SIZE = 6;
+var DNA_SIZE = 3;
 
 var blobs = [];
 
