@@ -1,15 +1,14 @@
 var wrapper = document.getElementById('wrapper');
 var canvas;
-const GRID_W = 80;
+const GRID_W = 100;
 const GRID_H = GRID_W;
+var offset = 4;
 var cols;
 var rows;
-var squares = [];
-var centers = [];
 var grid;
 
 function setup(){
-    canvas = createCanvas(601,400);
+    canvas = createCanvas(401,400);
     canvas.parent("wrapper");
 
     background(255);
@@ -19,86 +18,42 @@ function setup(){
     for(var i = 0; i<cols;i++){
       grid[i] = new Array(rows);
     }
-    grid();
+    // valid(0,1);
+    // noLoop();
 }
 
 function draw(){
   for(var i = 0; i < rows; i++){
     for(var j = 0; j < cols; j++){
-      grid[j][i].checkNeighbors();
+      if(valid(j,i)){
+        stroke(255);
+        fill(0);
+        rect(j*GRID_W,i*GRID_H,GRID_W,GRID_H);
+      }
     }
   }
+  offset++;
 }
 
-function grid(){
-  for(var i = 0; i < rows; i++){
-    for(var j = 0; j < cols; j++){
-      grid[j][i] = new Knode(j,i);
-    }
+function valid(x,y){
+  var newY = y+offset;
+  // console.log("x:",x,"y:",y,"rows:",rows,"cols:",cols);
+  var v = floor(newY/cols);
+  // console.log(v);
+  var modK = newY%cols;
+  // console.log(modK);
+  var exp = cols*x;
+  // console.log(exp);
+  var negExp = -exp;
+  var wholeExp = negExp-modK;
+  // console.log(wholeExp);
+  var twoPow = pow(2,wholeExp);
+  // console.log(twoPow);
+  var num = (v*twoPow)%2;
+  // console.log(num);
+  if(0.5<=num){
+    return true;
+  }else{
+    return false;
   }
 }
-      // var x = j*GRID_W;
-      // var y = i*GRID_H;
-      // var cx = x+(GRID_W/2);
-      // var cy = y+(GRID_H/2);
-      // var lx = x+GRID_W;
-      // var ly = y+GRID_H;
-      // squares.push(createVector(x,y));
-      // centers.push(createVector(cx,cy));
-      // rect(x,y,GRID_W,GRID_H);
-      // ellipse(cx,cy,GRID_W/4,GRID_H/4);
-      // var n = createVector(x+GRID_W*0.25,y+GRID_H*0.25);
-      // var nRot = 0;
-      // var e = createVector(x+GRID_W*0.75,y+GRID_H*0.25);
-      // var eRot = PI/2;
-      // var s = createVector(x+GRID_W*0.75,y+GRID_H*0.75);
-      // var sRot = PI;
-      // var w = createVector(x+GRID_W*0.25,y+GRID_H*0.75);
-      // var wRot = -PI/2;
-      // angleLine(n.x,n.y,nRot);
-      // angleLine(e.x,e.y,eRot);
-      // angleLine(s.x,s.y,sRot);
-      // angleLine(w.x,w.y,wRot);
-      // straightLine(n.x,n.y,nRot);
-      // straightLine(e.x,e.y,eRot);
-      // straightLine(s.x,s.y,sRot);
-      // straightLine(w.x,w.y,wRot);
-      // line(cx,y,lx,cy);
-      // line(lx,cy,cx,ly);
-      // line(cx,ly,x,cy);
-      // line(x,cy,cx,y);
-  //   }
-  // }
-// }
-
-// function angleLine(x,y,side){
-//   push();
-//   translate(x,y);
-//   rotate(side);
-//   line(0,-1,GRID_W*0.25,-GRID_H*0.25);
-//   line(GRID_W*0.25,-GRID_H*0.25,GRID_W*0.5,0);
-//   pop();
-// }
-//
-// function straightLine(x,y,side){
-//   push();
-//   translate(x,y);
-//   rotate(side);
-//   line(0,0,GRID_W*0.5,0);
-//   pop();
-// }
-
-// x, y	            x+w*0.25, y	        x+w*0.5, y	       x+w*0.75, y	      x+w, y
-// x, y+h*0.25	    x+w*0.25, y+h*0.25	x+w*0.5, y+h*0.25	 x+w*0.75, y+h*0.25	x+w, y+h*0.25
-// x, y+h*0.5	      x+w*0.25, y+h*0.5	  x+w*0.5, y+h*0.5	 x+w*0.75, y+h*0.5	x+w, y+h*0.5
-// x, y+h*.75	      x+w*0.25, y+h*.75	  x+w*0.5, y+h*.75	 x+w*0.75, y+h*.75	x+w, y+h*.75
-// x, y+h	          x+w*0.25, y+h	      x+w*0.5, y+h	     x+w*0.75, y+h	    x+w, y+h
-
-// x+w*0.25, y+h*0.25
-// x+w*0.5,  y
-// x+w*0.75, y+h*0.25
-
-// or
-
-// x+w*0.25, y+h*0.25
-// x+w*0.75, y+h*0.25
