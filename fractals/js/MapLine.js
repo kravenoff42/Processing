@@ -1,0 +1,4 @@
+function MapLine(){
+  this.curve = [];
+
+}
